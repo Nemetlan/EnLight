@@ -1,0 +1,148 @@
+export interface Course {
+  category: string
+  title: string
+  completedLessons: number
+  totalLessons: number
+  studentCount: number
+  bgColor: string
+  textColor: string
+  tagBg: string
+  tagText: string
+}
+
+export const courses: Course[] = [
+  {
+    category: 'Civil',
+    title: 'Structural Analysis & Design Fundamentals',
+    completedLessons: 12,
+    totalLessons: 24,
+    studentCount: 142,
+    bgColor: 'bg-[#1E56FB]',
+    textColor: 'text-white',
+    tagBg: 'bg-[#0A2FB5]',
+    tagText: 'text-white',
+  },
+  {
+    category: 'Mechanical',
+    title: 'Thermodynamics & Heat Transfer Basics',
+    completedLessons: 18,
+    totalLessons: 30,
+    studentCount: 98,
+    bgColor: 'bg-[#FF4D2E]',
+    textColor: 'text-white',
+    tagBg: 'bg-[#C0391F]',
+    tagText: 'text-white',
+  },
+  {
+    category: 'Electrical',
+    title: 'Circuit Theory & Signal Processing',
+    completedLessons: 5,
+    totalLessons: 20,
+    studentCount: 215,
+    bgColor: 'bg-[#111111]',
+    textColor: 'text-white',
+    tagBg: 'bg-[#374151]',
+    tagText: 'text-white',
+  },
+  {
+    category: 'Civil',
+    title: 'Geotechnical Engineering & Soil Mechanics',
+    completedLessons: 4,
+    totalLessons: 16,
+    studentCount: 64,
+    bgColor: 'bg-[#059669]',
+    textColor: 'text-white',
+    tagBg: 'bg-[#064E3B]',
+    tagText: 'text-white',
+  },
+  {
+    category: 'Mechanical',
+    title: 'CAD Modeling & 3D Prototyping Essentials',
+    completedLessons: 22,
+    totalLessons: 25,
+    studentCount: 180,
+    bgColor: 'bg-[#7C3AED]',
+    textColor: 'text-white',
+    tagBg: 'bg-[#4C1D95]',
+    tagText: 'text-white',
+  },
+  {
+    category: 'Electrical',
+    title: 'Embedded Systems & Microcontrollers',
+    completedLessons: 14,
+    totalLessons: 28,
+    studentCount: 112,
+    bgColor: 'bg-[#0284C7]',
+    textColor: 'text-white',
+    tagBg: 'bg-[#0C4A6E]',
+    tagText: 'text-white',
+  },
+  {
+    category: 'Civil',
+    title: 'Fluid Mechanics & Hydraulics Systems',
+    completedLessons: 10,
+    totalLessons: 22,
+    studentCount: 89,
+    bgColor: 'bg-[#D97706]',
+    textColor: 'text-white',
+    tagBg: 'bg-[#78350F]',
+    tagText: 'text-white',
+  },
+  {
+    category: 'Mechanical',
+    title: 'Robotics & Industrial Automation',
+    completedLessons: 30,
+    totalLessons: 35,
+    studentCount: 260,
+    bgColor: 'bg-[#DC2626]',
+    textColor: 'text-white',
+    tagBg: 'bg-[#7F1D1D]',
+    tagText: 'text-white',
+  },
+  {
+    category: 'Electrical',
+    title: 'Renewable Energy & Power Grids',
+    completedLessons: 7,
+    totalLessons: 24,
+    studentCount: 130,
+    bgColor: 'bg-[#16A34A]',
+    textColor: 'text-white',
+    tagBg: 'bg-[#14532D]',
+    tagText: 'text-white',
+  },
+  {
+    category: 'Civil',
+    title: 'Transportation & Highway Engineering',
+    completedLessons: 15,
+    totalLessons: 20,
+    studentCount: 105,
+    bgColor: 'bg-[#2563EB]',
+    textColor: 'text-white',
+    tagBg: 'bg-[#1E3A8A]',
+    tagText: 'text-white',
+  },
+  {
+    category: 'Mechanical',
+    title: 'Fluid Power & Pneumatics Engineering',
+    completedLessons: 9,
+    totalLessons: 18,
+    studentCount: 77,
+    bgColor: 'bg-[#DB2777]',
+    textColor: 'text-white',
+    tagBg: 'bg-[#831843]',
+    tagText: 'text-white',
+  },
+  {
+    category: 'Electrical',
+    title: 'Control Systems Engineering & Automation',
+    completedLessons: 16,
+    totalLessons: 32,
+    studentCount: 195,
+    bgColor: 'bg-[#9333EA]',
+    textColor: 'text-white',
+    tagBg: 'bg-[#581C87]',
+    tagText: 'text-white',
+  },
+]
+
+export const courseCategories = ['All', 'Civil', 'Mechanical', 'Electrical']
