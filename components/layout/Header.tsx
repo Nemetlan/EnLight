@@ -98,10 +98,6 @@ export function Header() {
             <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#D97706] to-[#F59E0B] overflow-hidden flex items-center justify-center flex-shrink-0 ring-2 ring-white shadow-sm">
               <span className="text-white text-xs font-bold select-none">JM</span>
             </div>
-            <div className="hidden md:flex flex-col leading-tight">
-              <span className="text-sm font-semibold text-[#111111] group-hover:text-[#FF4D2E] transition-colors">Jordan Mitchell</span>
-              <span className="text-xs text-[#6B7280]">@j_mitchell</span>
-            </div>
           </div>
         </div>
       </header>
