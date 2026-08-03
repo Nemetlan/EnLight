@@ -28,11 +28,10 @@ export function Sidebar() {
 
   return (
     <nav
-      className="flex flex-col md:flex-col items-center md:w-16 md:py-3 md:my-4 md:ml-4 gap-3 md:h-fit flex-shrink-0 bg-white border md:border border-[#E5E7EB] md:rounded-3xl shadow-xl shadow-black/5 transition-all
-        md:w-16 w-full h-16 flex-row md:flex-col px-2 md:px-3 py-2 md:py-3 rounded-none md:rounded-3xl"
+      className="flex flex-col items-center w-16 py-3 my-4 ml-4 gap-3 h-fit flex-shrink-0 bg-white border border-[#E5E7EB] rounded-3xl shadow-xl shadow-black/5 transition-all"
       aria-label="Main navigation"
     >
-      <div className="flex md:flex-col items-center gap-1 md:gap-1 w-full flex-1 justify-around md:justify-start px-0 md:px-3">
+      <div className="flex flex-col items-center gap-1 w-full px-3">
         {navItems.map(({ icon: Icon, label, href }) => {
           const active = pathname === href || (href !== '/dashboard' && pathname.startsWith(href))
           return (
@@ -43,7 +42,7 @@ export function Sidebar() {
               aria-current={active ? 'page' : undefined}
               title={label}
               className={cn(
-                'w-10 h-10 flex items-center justify-center rounded-xl transition-colors flex-shrink-0',
+                'w-10 h-10 flex items-center justify-center rounded-xl transition-colors',
                 active
                   ? 'bg-[#FF4D2E] text-white shadow-md shadow-[#FF4D2E]/20'
                   : 'text-[#6B7280] hover:bg-[#F4F5F7] hover:text-[#111111]'
@@ -55,15 +54,15 @@ export function Sidebar() {
         })}
       </div>
 
-      <div className="hidden md:block w-8 h-[1px] bg-[#E5E7EB]" />
+      <div className="w-8 h-[1px] bg-[#E5E7EB]" />
 
-      <div className="flex md:flex-col items-center gap-1 md:gap-1 w-auto md:w-full px-0 md:px-3">
+      <div className="flex flex-col items-center gap-1 w-full px-3">
         <Link
           href="/settings"
           aria-label="Settings"
           title="Settings"
           className={cn(
-            'w-10 h-10 flex items-center justify-center rounded-xl transition-colors flex-shrink-0',
+            'w-10 h-10 flex items-center justify-center rounded-xl transition-colors',
             pathname === '/settings'
               ? 'bg-[#FF4D2E] text-white shadow-md shadow-[#FF4D2E]/20'
               : 'text-[#6B7280] hover:bg-[#F4F5F7] hover:text-[#111111]'
@@ -75,7 +74,7 @@ export function Sidebar() {
           href="/login"
           aria-label="Log out"
           title="Log out"
-          className="w-10 h-10 flex items-center justify-center rounded-xl text-[#6B7280] hover:bg-[#F4F5F7] hover:text-[#111111] transition-colors flex-shrink-0"
+          className="w-10 h-10 flex items-center justify-center rounded-xl text-[#6B7280] hover:bg-[#F4F5F7] hover:text-[#111111] transition-colors"
         >
           <LogOut size={20} />
         </Link>

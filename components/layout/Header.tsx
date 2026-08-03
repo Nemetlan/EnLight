@@ -54,16 +54,16 @@ export function Header() {
   return (
     <>
       {/* Floating Glassmorphism Header */}
-      <header className="sticky top-4 z-30 mx-2 md:mx-4 my-4 flex items-center justify-between gap-2 md:gap-4 px-4 md:px-6 py-2 md:py-3 rounded-2xl bg-white/80 backdrop-blur-md border border-[#E5E7EB] shadow-lg shadow-black/5 transition-all">
+      <header className="sticky top-4 z-30 mx-4 my-4 flex items-center justify-between gap-4 px-6 py-3 rounded-2xl bg-white/80 backdrop-blur-md border border-[#E5E7EB] shadow-lg shadow-black/5 transition-all">
         {/* Logo */}
-        <div className="text-lg md:text-2xl lg:text-3xl font-black tracking-tight select-none flex-shrink-0">
+        <div className="text-2xl sm:text-3xl font-black tracking-tight select-none flex-shrink-0">
           <span className="text-[#FF4D2E]">En</span>
           <span className="text-[#111111]">Light</span>
         </div>
 
-        {/* Enhanced Search Input - Hidden on mobile, shown on tablet+ */}
+        {/* Enhanced Search Input */}
         <div 
-          className="hidden md:flex items-center gap-2 bg-[#F4F5F7] focus-within:bg-white border border-transparent focus-within:border-[#FF4D2E]/30 rounded-full px-4 py-2 w-48 lg:w-80 xl:w-96 transition-all shadow-inner" 
+          className="flex items-center gap-2 bg-[#F4F5F7] focus-within:bg-white border border-transparent focus-within:border-[#FF4D2E]/30 rounded-full px-4 py-2 w-48 sm:w-80 md:w-96 transition-all shadow-inner" 
           role="search"
         >
           <Search size={16} className="text-[#6B7280] flex-shrink-0" />
@@ -81,29 +81,21 @@ export function Header() {
           </button>
         </div>
 
-        {/* Mobile Search Icon */}
-        <button
-          aria-label="Search"
-          className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl bg-[#F4F5F7] hover:bg-[#E5E7EB] active:scale-95 transition-all text-[#6B7280]"
-        >
-          <Search size={18} />
-        </button>
-
         {/* User Actions */}
-        <div className="flex items-center gap-1 md:gap-2 lg:gap-4 flex-shrink-0">
+        <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
           {/* Notifications Button */}
           <button
             aria-label="Open notifications"
             onClick={() => setDrawerOpen(true)}
-            className="w-9 md:w-10 h-9 md:h-10 flex items-center justify-center rounded-xl bg-[#F4F5F7] hover:bg-[#E5E7EB]/60 active:scale-95 transition-all relative text-[#111111]"
+            className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#F4F5F7] hover:bg-[#E5E7EB]/60 active:scale-95 transition-all relative text-[#111111]"
           >
-            <Bell size={18} className="md:w-[19px] md:h-[19px] text-[#6B7280]" />
-            <span className="absolute top-2 md:top-2.5 right-2 md:right-2.5 w-2 h-2 bg-[#FF4D2E] rounded-full ring-2 ring-white" aria-hidden="true" />
+            <Bell size={19} className="text-[#6B7280]" />
+            <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-[#FF4D2E] rounded-full ring-2 ring-white" aria-hidden="true" />
           </button>
 
-          {/* User Profile Pill - Hidden on mobile */}
-          <div className="hidden md:flex items-center gap-3 p-1 lg:pr-3 rounded-full hover:bg-[#F4F5F7] transition-colors cursor-pointer group">
-            <div className="w-8 md:w-9 h-8 md:h-9 rounded-full bg-gradient-to-tr from-[#D97706] to-[#F59E0B] overflow-hidden flex items-center justify-center flex-shrink-0 ring-2 ring-white shadow-sm">
+          {/* User Profile Pill */}
+          <div className="flex items-center gap-3 p-1 sm:pr-3 rounded-full hover:bg-[#F4F5F7] transition-colors cursor-pointer group">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#D97706] to-[#F59E0B] overflow-hidden flex items-center justify-center flex-shrink-0 ring-2 ring-white shadow-sm">
               <span className="text-white text-xs font-bold select-none">JM</span>
             </div>
           </div>
