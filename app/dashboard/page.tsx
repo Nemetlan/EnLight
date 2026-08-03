@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
 import { AppShell } from '@/components/layout/AppShellDash'
 import { BookOpen, Plus, FileText, Calendar, Download, Settings } from 'lucide-react'
 
@@ -62,8 +63,13 @@ const navigationCards = [
 ]
 
 export default function DashboardPage() {
-  const hour = new Date().getHours()
-  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
+  const [greeting, setGreeting] = useState('')
+
+  useEffect(() => {
+    const hour = new Date().getHours()
+    const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
+    setGreeting(greet)
+  }, [])
 
   return (
     <AppShell>
