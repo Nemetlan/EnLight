@@ -77,19 +77,19 @@ export default function DashboardPage() {
         {/* Greeting Section */}
         <div>
           <p className="text-microcopy text-[#6B7280] mb-1">{greeting}</p>
-          <h1 className="text-2xl font-semibold text-[#111111]">Welcome back, Jordan</h1>
-          <p className="text-sm text-[#6B7280] mt-2">Ready to continue your learning journey?</p>
+          <h1 className="text-xl md:text-2xl font-semibold text-[#111111]">Welcome back, Jordan</h1>
+          <p className="text-xs md:text-sm text-[#6B7280] mt-2">Ready to continue your learning journey?</p>
         </div>
 
         {/* Navigation Grid Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
           {navigationCards.map((card) => {
             const Icon = card.icon
             return (
               <Link
                 key={card.id}
                 href={card.href}
-                className="relative overflow-hidden rounded-2xl h-40 flex flex-col justify-between p-5 transition-shadow hover:shadow-md"
+                className="relative overflow-hidden rounded-xl md:rounded-2xl h-32 md:h-40 flex flex-col justify-between p-3 md:p-5 transition-shadow hover:shadow-md"
                 style={{ backgroundColor: card.bgColor }}
               >
                 {/* Line-art overlay */}
@@ -105,19 +105,19 @@ export default function DashboardPage() {
                 {/* Icon and label top */}
                 <div className="relative z-10 flex items-start justify-between">
                   <div
-                    className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                    className="w-7 md:w-9 h-7 md:h-9 rounded-lg flex items-center justify-center flex-shrink-0"
                     style={{ backgroundColor: card.accent + '33' }}
                   >
-                    <Icon size={18} style={{ color: card.accent }} />
+                    <Icon size={14} className="md:w-[18px] md:h-[18px]" style={{ color: card.accent }} />
                   </div>
                 </div>
 
                 {/* Title and subtitle bottom */}
                 <div className="relative z-10">
-                  <p className="text-sm font-semibold" style={{ color: card.accent }}>
+                  <p className="text-xs md:text-sm font-semibold" style={{ color: card.accent }}>
                     {card.label}
                   </p>
-                  <p className="text-xs mt-0.5" style={{ color: card.accent + 'B3' }}>
+                  <p className="text-[10px] md:text-xs mt-0.5" style={{ color: card.accent + 'B3' }}>
                     {card.subtitle}
                   </p>
                 </div>
