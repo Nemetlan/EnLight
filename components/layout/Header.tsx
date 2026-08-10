@@ -1,9 +1,20 @@
 'use client'
 
 import { useState } from 'react'
-import { Search, Bell, X, Info, AlertCircle, CheckCircle2 } from 'lucide-react'
+import { Search, Bell, X, Info, AlertCircle, CheckCircle2, Menu, LayoutGrid, BookOpen, BookCopy, CalendarDays, FolderDown, BookMarked, Settings, LogOut } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
+
+const mobileNavItems = [
+  { icon: LayoutGrid, label: 'Dashboard', href: '/dashboard' },
+  { icon: BookOpen, label: 'My Library', href: '/library' },
+  { icon: BookCopy, label: 'Request Catalog', href: '/request-catalog' },
+  { icon: CalendarDays, label: 'Class Diary', href: '/diary' },
+  { icon: FolderDown, label: 'Resources', href: '/resources' },
+  { icon: BookMarked, label: 'About', href: '/about' },
+]
 
 const notifications = [
   {
@@ -49,12 +60,14 @@ const notifications = [
 ]
 
 export function Header() {
+  const pathname = usePathname()
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   return (
     <>
       {/* Floating Glassmorphism Header */}
-      <header className="sticky top-4 z-30 mx-4 my-4 flex items-center justify-between gap-4 px-6 py-3 rounded-2xl bg-white/80 backdrop-blur-md border border-[#E5E7EB] shadow-lg shadow-black/5 transition-all">
+      <header className="sticky top-0 z-30 mx-0 my-0 flex items-center justify-between gap-3 rounded-none border-x-0 border-t-0 px-4 py-3 sm:mx-2 sm:my-2 sm:rounded-2xl sm:border-x sm:border-t sm:px-6 md:sticky md:top-4 md:mx-4 md:my-4 md:gap-4 md:rounded-2xl md:py-3 bg-white/80 backdrop-blur-md border border-[#E5E7EB] shadow-lg shadow-black/5 transition-all">
         {/* Logo */}
         <div className="text-2xl sm:text-3xl font-black tracking-tight select-none flex-shrink-0">
           <span className="text-[#FF4D2E]">En</span>
@@ -63,7 +76,7 @@ export function Header() {
 
         {/* Enhanced Search Input */}
         <div 
-          className="flex items-center gap-2 bg-[#F4F5F7] focus-within:bg-white border border-transparent focus-within:border-[#FF4D2E]/30 rounded-full px-4 py-2 w-48 sm:w-80 md:w-96 transition-all shadow-inner" 
+          className="hidden md:flex items-center gap-2 bg-[#F4F5F7] focus-within:bg-white border border-transparent focus-within:border-[#FF4D2E]/30 rounded-full px-4 py-2 w-48 sm:w-80 md:w-96 transition-all shadow-inner" 
           role="search"
         >
           <Search size={16} className="text-[#6B7280] flex-shrink-0" />
@@ -81,8 +94,19 @@ export function Header() {
           </button>
         </div>
 
+        {/* Mobile menu trigger */}
+        <button
+          type="button"
+          aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+          className="flex size-11 items-center justify-center rounded-xl bg-[#F4F5F7] text-[#111111] transition-colors hover:bg-[#E5E7EB] md:hidden"
+        >
+          {menuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+
         {/* User Actions */}
-        <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+        <div className="hidden items-center gap-2 sm:gap-4 flex-shrink-0 md:flex">
           {/* Notifications Button */}
           <button
             aria-label="Open notifications"
@@ -101,6 +125,41 @@ export function Header() {
           </div>
         </div>
       </header>
+
+      {menuOpen && (
+        <div className="fixed inset-0 z-40 bg-black/20 md:hidden" onClick={() => setMenuOpen(false)}>
+          <div className="absolute inset-x-0 top-[69px] border-b border-[#E5E7EB] bg-white px-4 py-4 shadow-xl" onClick={(event) => event.stopPropagation()}>
+          <nav className="grid grid-cols-2 gap-2" aria-label="Mobile navigation">
+            {mobileNavItems.map(({ icon: Icon, label, href }) => {
+              const active = pathname === href || (href !== '/dashboard' && pathname.startsWith(href))
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={() => setMenuOpen(false)}
+                  aria-current={active ? 'page' : undefined}
+                  className={cn(
+                    'flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm font-semibold transition-colors',
+                    active ? 'bg-[#FF4D2E] text-white' : 'text-[#111111] hover:bg-[#F4F5F7]'
+                  )}
+                >
+                  <Icon size={18} />
+                  <span className="truncate">{label}</span>
+                </Link>
+              )
+            })}
+            <Link href="/settings" onClick={() => setMenuOpen(false)} className="flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm font-semibold text-[#111111] hover:bg-[#F4F5F7]">
+              <Settings size={18} />
+              Settings
+            </Link>
+            <Link href="/login" onClick={() => setMenuOpen(false)} className="flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm font-semibold text-[#111111] hover:bg-[#F4F5F7]">
+              <LogOut size={18} />
+              Log out
+            </Link>
+          </nav>
+          </div>
+        </div>
+      )}
 
       {/* Notification Drawer Overlay */}
       {drawerOpen && (

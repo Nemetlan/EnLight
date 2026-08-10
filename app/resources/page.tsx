@@ -49,18 +49,18 @@ export default function ResourcesPage() {
     <AppShell>
       <div className="flex flex-col gap-5">
         {/* Header */}
-        <div className="flex items-center justify-between flex-wrap gap-3">
+        <div className="flex items-start justify-between flex-wrap gap-3">
           <div>
             <h1 className="text-2xl font-black text-[#111111]">Resource Library</h1>
             <p className="text-sm text-[#6B7280] mt-0.5">Download class materials, audio guides, and practice tests</p>
           </div>
-          <div className="flex items-center gap-2" role="group" aria-label="Resource categories">
+          <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto" role="group" aria-label="Resource categories">
             {filters.map((f) => (
               <button
                 key={f}
                 onClick={() => setActiveFilter(f)}
                 aria-pressed={activeFilter === f}
-                className={`text-sm font-semibold px-4 py-1.5 rounded-full border transition-colors ${
+                className={`min-h-11 text-sm font-semibold px-3 sm:px-4 py-1.5 rounded-full border transition-colors ${
                   activeFilter === f
                     ? 'bg-[#FF4D2E] text-white border-[#FF4D2E]'
                     : 'bg-white text-[#111111] border-[#E5E7EB] hover:border-[#FF4D2E] hover:text-[#FF4D2E]'
@@ -73,17 +73,17 @@ export default function ResourcesPage() {
         </div>
 
         {/* Resource grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {filtered.map((r) => {
             const cfg = categoryConfig[r.category]
             const Icon = cfg.icon
             return (
               <div
                 key={r.id}
-                className="bg-white rounded-2xl p-5 flex flex-col gap-4 hover:shadow-md transition-shadow"
+                className="min-w-0 bg-white rounded-2xl p-3 sm:p-5 flex flex-col gap-3 sm:gap-4 hover:shadow-md transition-shadow"
               >
                 <div className="flex items-start gap-3">
-                  <div className={`w-10 h-10 rounded-xl ${cfg.bg} flex items-center justify-center flex-shrink-0`}>
+                  <div className={`size-9 sm:size-10 rounded-xl ${cfg.bg} flex items-center justify-center flex-shrink-0`}>
                     <Icon size={20} className={cfg.color} />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -98,7 +98,7 @@ export default function ResourcesPage() {
                   </div>
                   <button
                     aria-label={`Download ${r.name}`}
-                    className="flex items-center gap-1.5 bg-[#111111] text-white text-xs font-semibold px-3.5 py-2 rounded-xl hover:opacity-80 transition-opacity"
+                    className="flex min-h-11 items-center gap-1.5 rounded-xl bg-[#111111] px-3 text-xs font-semibold text-white transition-opacity hover:opacity-80 sm:px-3.5"
                   >
                     <Download size={13} />
                     Download

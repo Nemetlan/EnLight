@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { AppShell } from '@/components/layout/AppShellDash'
+import { AppShell } from '@/components/layout/AppShell'
 import { BookOpen, Plus, FileText, Calendar, Download, Settings } from 'lucide-react'
 
 const navigationCards = [
@@ -73,7 +73,7 @@ export default function DashboardPage() {
 
   return (
     <AppShell>
-      <div className="flex flex-col gap-6">
+      <div className="flex w-full min-w-0 flex-col gap-6">
         {/* Greeting Section */}
         <div>
           <p className="text-microcopy text-[#6B7280] mb-1">{greeting}</p>
@@ -82,14 +82,14 @@ export default function DashboardPage() {
         </div>
 
         {/* Navigation Grid Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {navigationCards.map((card) => {
             const Icon = card.icon
             return (
               <Link
                 key={card.id}
                 href={card.href}
-                className="relative overflow-hidden rounded-2xl h-40 flex flex-col justify-between p-5 transition-shadow hover:shadow-md"
+                className="relative min-w-0 overflow-hidden rounded-2xl h-32 sm:h-40 flex flex-col justify-between p-3 sm:p-5 transition-shadow hover:shadow-md"
                 style={{ backgroundColor: card.bgColor }}
               >
                 {/* Line-art overlay */}
