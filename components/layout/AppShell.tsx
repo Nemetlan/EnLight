@@ -20,19 +20,19 @@ export function AppShell({ children }: AppShellProps) {
 
   return (
 
-    <div className="flex h-screen overflow-hidden bg-[#F4F5F7]">
+    <div className="flex h-[100dvh] min-h-0 max-w-full overflow-hidden bg-[#F4F5F7]">
 
-      <div className="flex items-center justify-center">
+      <div className="hidden md:flex items-center justify-center">
 
         <Sidebar />
 
       </div>
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div className="flex min-w-0 min-h-0 flex-1 flex-col overflow-hidden">
 
         <Header />
 
-        <main className="flex-1 overflow-y-auto px-6 pb-6 pt-2">
+        <main className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden px-4 pb-6 pt-1 sm:px-6 md:pt-2">
 
           {children}
 

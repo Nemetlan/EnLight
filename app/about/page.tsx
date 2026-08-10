@@ -18,11 +18,11 @@ const socialLinks = [
 export default function AboutPage() {
   return (
     <AppShell>
-      <div className="flex flex-col gap-6 max-w-3xl">
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
         <h1 className="text-2xl font-black text-[#111111]">About the Tutor</h1>
 
         {/* Profile card */}
-        <div className="bg-white rounded-2xl p-6 flex flex-col sm:flex-row gap-6 items-start">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row gap-6 items-start">
           {/* Avatar */}
           <div className="w-24 h-24 rounded-2xl bg-[#FF4D2E] flex items-center justify-center flex-shrink-0">
             <span className="text-white text-3xl font-black select-none">AP</span>
@@ -47,7 +47,7 @@ export default function AboutPage() {
         </div>
 
         {/* Credentials */}
-        <div className="bg-white rounded-2xl p-6 flex flex-col gap-4">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 flex flex-col gap-4">
           <h3 className="text-base font-bold text-[#111111]">Credentials & Qualifications</h3>
           <ul className="flex flex-col gap-2.5">
             {credentials.map((c) => (
@@ -60,7 +60,7 @@ export default function AboutPage() {
         </div>
 
         {/* Class locations */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4">
           <div className="bg-white rounded-2xl p-6 flex flex-col gap-3">
             <div className="w-10 h-10 rounded-xl bg-[#EEF2FF] flex items-center justify-center">
               <MapPin size={20} className="text-[#1E56FB]" />
@@ -87,7 +87,7 @@ export default function AboutPage() {
         </div>
 
         {/* Social links */}
-        <div className="bg-white rounded-2xl p-6 flex flex-col gap-4">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 flex flex-col gap-4">
           <h3 className="text-base font-bold text-[#111111]">Connect</h3>
           <div className="flex gap-3 flex-wrap">
             {socialLinks.map(({ label, href, icon: Icon, color }) => (

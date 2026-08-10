@@ -71,7 +71,7 @@ export function CourseCard({
 
   return (
     <article
-      className={`rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-6 flex flex-col justify-between relative overflow-hidden aspect-[3/2] ${bgColor}`}
+      className={`min-w-0 rounded-2xl sm:rounded-3xl p-3 sm:p-5 md:p-6 flex flex-col justify-between relative overflow-hidden aspect-[3/2] ${bgColor}`}
       aria-label={`${title} course`}
     >
       <LineArtOverlay />
@@ -85,7 +85,7 @@ export function CourseCard({
         </span>
         <button
           aria-label={`Bookmark ${title}`}
-          className="opacity-70 hover:opacity-100 transition-opacity"
+          className="flex size-11 items-center justify-center opacity-70 transition-opacity hover:opacity-100"
         >
           <Bookmark className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${textColor}`} />
         </button>
@@ -121,7 +121,7 @@ export function CourseCard({
       {/* Footer */}
       <div className="relative flex items-center justify-between">
         <AvatarStack count={studentCount} />
-        <button className="bg-[#C6F232] text-[#111111] text-[10px] sm:text-xs md:text-sm font-semibold px-2.5 sm:px-3.5 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-lg hover:opacity-90 transition-opacity whitespace-nowrap">
+        <button className="min-h-11 max-w-[55%] rounded-lg bg-[#C6F232] px-2.5 text-[10px] font-semibold text-[#111111] transition-opacity hover:opacity-90 sm:px-3.5 sm:text-xs md:px-4 md:py-2 md:text-sm">
           {actionLabel}
         </button>
       </div>

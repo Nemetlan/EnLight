@@ -17,11 +17,11 @@ export default function SettingsPage() {
 
   return (
     <AppShell>
-      <div className="flex flex-col gap-6 max-w-2xl">
+      <div className="mx-auto flex w-full max-w-2xl flex-col gap-6">
         <h1 className="text-2xl font-black text-[#111111]">Profile Settings</h1>
 
         {/* Profile picture */}
-        <div className="bg-white rounded-2xl p-6 flex flex-col gap-4">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 flex flex-col gap-4">
           <h2 className="text-base font-bold text-[#111111]">Profile Picture</h2>
           <div className="flex items-center gap-5">
             <div className="relative w-20 h-20 rounded-2xl bg-[#D97706] flex items-center justify-center flex-shrink-0">
@@ -44,7 +44,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Personal info */}
-        <div className="bg-white rounded-2xl p-6 flex flex-col gap-5">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 flex flex-col gap-5">
           <h2 className="text-base font-bold text-[#111111]">Personal Information</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
@@ -69,7 +69,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Contact info */}
-        <div className="bg-white rounded-2xl p-6 flex flex-col gap-5">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 flex flex-col gap-5">
           <h2 className="text-base font-bold text-[#111111]">Contact Information</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
@@ -103,7 +103,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Security */}
-        <div className="bg-white rounded-2xl p-6 flex flex-col gap-5">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 flex flex-col gap-5">
           <h2 className="text-base font-bold text-[#111111]">Security</h2>
 
           {/* Change password */}
