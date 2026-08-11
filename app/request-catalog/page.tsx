@@ -5,6 +5,7 @@ import { SlidersHorizontal, X } from 'lucide-react'
 import { AppShell } from '@/components/layout/AppShell'
 import { CourseCard } from '@/components/shared/CourseCard'
 import { courses, courseCategories } from '@/lib/courses'
+import { courseSlugForTitle } from '@/lib/lessons'
 
 // Catalog includes additional courses not yet enrolled
 const catalogExtras = [
@@ -117,6 +118,7 @@ export default function RequestCatalogPage() {
               key={course.title}
               {...course}
               actionLabel="Request Course"
+              lessonHref={`/lesson?course=${courseSlugForTitle(course.title)}`}
             />
           ))}
         </div>

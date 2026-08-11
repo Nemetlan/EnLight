@@ -5,6 +5,7 @@ import { SlidersHorizontal, X } from 'lucide-react'
 import { AppShell } from '@/components/layout/AppShell'
 import { CourseCard } from '@/components/shared/CourseCard'
 import { courses, courseCategories } from '@/lib/courses'
+import { courseSlugForTitle } from '@/lib/lessons'
 
 export default function LibraryPage() {
   const [activeCategory, setActiveCategory] = useState('All')
@@ -66,6 +67,7 @@ export default function LibraryPage() {
               key={course.title}
               {...course}
               actionLabel="Continue Lesson"
+              lessonHref={`/lesson?course=${courseSlugForTitle(course.title)}`}
             />
           ))}
         </div>
