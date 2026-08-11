@@ -2,7 +2,7 @@ export interface Lesson {
   id: string
   title: string
   duration: string
-  videoId: string
+  videoIdEncoded: string
   completed?: boolean
 }
 
@@ -21,11 +21,11 @@ export const lessonCourses: LessonCourse[] = [
     category: 'Civil Engineering',
     instructor: 'Dr. Maya Chen',
     lessons: [
-      { id: 'intro', title: 'Introduction to Structural Analysis', duration: '12:48', videoId: 'ysz5S6PUM-U', completed: true },
-      { id: 'loads', title: 'Understanding Loads and Forces', duration: '18:22', videoId: 'aqz-KE-bpKQ', completed: true },
-      { id: 'equilibrium', title: 'Equilibrium and Support Reactions', duration: '21:10', videoId: 'ScMzIvxBSi4' },
-      { id: 'beams', title: 'Shear Force and Bending Moments', duration: '24:06', videoId: 'M7lc1UVf-VE' },
-      { id: 'design', title: 'Design Principles and Safety Factors', duration: '16:34', videoId: 'dQw4w9WgXcQ' },
+      { id: 'intro', title: 'Introduction to Structural Analysis', duration: '12:48', videoIdEncoded: 'eXN6NVM2UFVNLVU=', completed: true },
+      { id: 'loads', title: 'Understanding Loads and Forces', duration: '18:22', videoIdEncoded: 'YXF6LUtFLWJwS1E=', completed: true },
+      { id: 'equilibrium', title: 'Equilibrium and Support Reactions', duration: '21:10', videoIdEncoded: 'U2NNekl2eEJTaTQ=' },
+      { id: 'beams', title: 'Shear Force and Bending Moments', duration: '24:06', videoIdEncoded: 'TTdsYzFVVmYtVkU=' },
+      { id: 'design', title: 'Design Principles and Safety Factors', duration: '16:34', videoIdEncoded: 'ZFF3NHc5V2dYY1E=' },
     ],
   },
   {
@@ -34,9 +34,9 @@ export const lessonCourses: LessonCourse[] = [
     category: 'Mechanical Engineering',
     instructor: 'Prof. Marcus Lee',
     lessons: [
-      { id: 'systems', title: 'Thermodynamic Systems', duration: '15:12', videoId: 'ysz5S6PUM-U', completed: true },
-      { id: 'energy', title: 'Energy, Work, and Heat', duration: '20:45', videoId: 'aqz-KE-bpKQ' },
-      { id: 'entropy', title: 'Entropy and the Second Law', duration: '19:30', videoId: 'ScMzIvxBSi4' },
+      { id: 'systems', title: 'Thermodynamic Systems', duration: '15:12', videoIdEncoded: 'eXN6NVM2UFVNLVU=', completed: true },
+      { id: 'energy', title: 'Energy, Work, and Heat', duration: '20:45', videoIdEncoded: 'YXF6LUtFLWJwS1E=' },
+      { id: 'entropy', title: 'Entropy and the Second Law', duration: '19:30', videoIdEncoded: 'U2NNekl2eEJTaTQ=' },
     ],
   },
 ]
