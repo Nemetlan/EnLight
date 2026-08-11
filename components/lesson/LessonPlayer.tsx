@@ -114,6 +114,7 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [isMuted, setIsMuted] = useState(false)
+  const [playbackRate, setPlaybackRate] = useState(1)
 
   const decodedId = useMemo(() => decodeVideoId(lesson.videoIdEncoded), [lesson.videoIdEncoded])
 
@@ -143,6 +144,9 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
         events: {
           onReady: (event: any) => {
             setDuration(event.target.getDuration() || 0)
+            if (typeof event.target.setPlaybackRate === 'function') {
+              event.target.setPlaybackRate(playbackRate)
+            }
           },
           onStateChange: (event: any) => {
             if (event.data === window.YT.PlayerState.PLAYING) setIsPlaying(true)
@@ -203,6 +207,12 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
       playerRef.current.mute()
       setIsMuted(true)
     }
+  }
+
+  const handlePlaybackRate = (rate: number) => {
+    if (!playerRef.current || typeof playerRef.current.setPlaybackRate !== 'function') return
+    playerRef.current.setPlaybackRate(rate)
+    setPlaybackRate(rate)
   }
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -299,6 +309,22 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
                   <span className="text-xs font-bold text-white/90 tracking-wide">
                     {formatTime(currentTime)} / {formatTime(duration)}
                   </span>
+                </div>
+
+                <div className="flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-xs font-semibold text-white/90">
+                  <span>Speed</span>
+                  <select
+                    aria-label="Playback speed"
+                    value={playbackRate}
+                    onChange={(event) => handlePlaybackRate(Number(event.target.value))}
+                    className="rounded-full bg-transparent py-1 pl-2 pr-6 text-xs font-semibold text-white outline-none ring-0 focus:ring-0"
+                  >
+                    {[0.75, 1, 1.25, 1.5, 2].map((rate) => (
+                      <option key={rate} value={rate} className="bg-white text-[#111111]">
+                        {rate}x
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <button
