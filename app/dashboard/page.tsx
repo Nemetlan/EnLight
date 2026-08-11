@@ -48,8 +48,8 @@ const navigationCards = [
     subtitle: 'Tutor profile',
     href: '/about',
     icon: FileText,
-    bgColor: '#F4F5F7',
-    accent: '#111111',
+    bgColor: '#F5E7EB', // Updated: Electric Purple (matches Blue, Red, & Lime palette)
+    accent: '#111111', // Updated: Paired with Lime accent for punchy contrast
   },
   {
     id: 6,
@@ -60,7 +60,7 @@ const navigationCards = [
     bgColor: '#E5E7EB',
     accent: '#111111',
   },
-]
+];
 
 export default function DashboardPage() {
   const [greeting, setGreeting] = useState('')

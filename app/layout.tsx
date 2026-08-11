@@ -25,19 +25,20 @@ export default function RootLayout({
     <html lang="en" className={`${plusJakartaSans.variable} ${inter.variable} bg-background`}>
       <body className="font-sans antialiased">
         <div className="relative min-h-screen overflow-hidden">
-          <div className="pointer-events-none absolute inset-0 opacity-10">
+          <div className="pointer-events-none absolute inset-0 opacity-80">
             <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="85%" cy="20%" r="48" fill="none" stroke="white" strokeWidth="1.5" />
-              <circle cx="85%" cy="20%" r="30" fill="none" stroke="white" strokeWidth="1" />
-              <circle cx="85%" cy="20%" r="14" fill="none" stroke="white" strokeWidth="1" />
-              <line x1="0" y1="75%" x2="100%" y2="75%" stroke="white" strokeWidth="0.75" />
-              <line x1="0" y1="85%" x2="100%" y2="85%" stroke="white" strokeWidth="0.5" />
-              <line x1="10%" y1="0" x2="10%" y2="100%" stroke="white" strokeWidth="0.5" />
-              <line x1="20%" y1="0" x2="20%" y2="100%" stroke="white" strokeWidth="0.5" />
+              <circle cx="85%" cy="20%" r="480" fill="none" stroke="rgba(15,23,42,0.16)" strokeWidth="1.5" />
+              <circle cx="85%" cy="20%" r="300" fill="none" stroke="rgba(15,23,42,0.14)" strokeWidth="1" />
+              <circle cx="85%" cy="20%" r="140" fill="none" stroke="rgba(15,23,42,0.12)" strokeWidth="1" />
+              <circle cx="85%" cy="20%" r="30" fill="none" stroke="rgba(15,23,42,0.12)" strokeWidth="1" />
+              <line x1="0" y1="75%" x2="100%" y2="75%" stroke="rgba(15,23,42,0.12)" strokeWidth="0.75" />
+              <line x1="0" y1="85%" x2="100%" y2="85%" stroke="rgba(15,23,42,0.10)" strokeWidth="0.5" />
+              <line x1="10%" y1="0" x2="10%" y2="100%" stroke="rgba(15,23,42,0.10)" strokeWidth="0.5" />
+              <line x1="20%" y1="0" x2="20%" y2="100%" stroke="rgba(15,23,42,0.10)" strokeWidth="0.5" />
             </svg>
           </div>
 
-          <div className="relative">
+          <div className="">
             {children}
           </div>
         </div>
