@@ -24,7 +24,7 @@ function AvatarStack({ count }: { count: number }) {
         {colors.map((color, i) => (
           <div
             key={i}
-            className={`w-3.5 h-3.5 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full ${color} border border-white/30`}
+            className={`w-3.5 h-3.5 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full ${color} border border-white/30 transition-transform duration-300 group-hover:scale-105`}
             aria-hidden="true"
           />
         ))}
@@ -39,7 +39,7 @@ function AvatarStack({ count }: { count: number }) {
 function LineArtOverlay() {
   return (
     <svg
-      className="absolute inset-0 w-full h-full pointer-events-none opacity-10"
+      className="absolute inset-0 w-full h-full pointer-events-none opacity-10 group-hover:opacity-20 transition-all duration-500 ease-out group-hover:scale-105"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
@@ -71,7 +71,7 @@ export function CourseCard({
 
   return (
     <article
-      className={`w-full min-w-0 rounded-2xl sm:rounded-3xl p-2.5 sm:p-5 md:p-6 flex flex-col justify-between relative overflow-hidden h-[180px] sm:h-auto sm:aspect-[3/2] ${bgColor}`}
+      className={`group cursor-pointer w-full min-w-0 rounded-2xl sm:rounded-3xl p-2.5 sm:p-5 md:p-6 flex flex-col justify-between relative overflow-hidden h-[180px] sm:h-auto sm:aspect-[3/2] ${bgColor} transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-xl hover:shadow-black/10`}
       aria-label={`${title} course`}
     >
       <LineArtOverlay />
@@ -79,7 +79,7 @@ export function CourseCard({
       {/* Top row */}
       <div className="relative flex items-center justify-between gap-2 z-10">
         <span
-          className={`text-[9px] sm:text-xs md:text-sm font-semibold px-2 sm:px-3 py-0.5 rounded-full truncate max-w-[70%] ${tagBg} ${tagText}`}
+          className={`text-[9px] sm:text-xs md:text-sm font-semibold px-2 sm:px-3 py-0.5 rounded-full truncate max-w-[70%] ${tagBg} ${tagText} transition-transform duration-300 group-hover:scale-105`}
           title={category}
         >
           {category}
@@ -87,15 +87,15 @@ export function CourseCard({
         <button
           type="button"
           aria-label={`Bookmark ${title}`}
-          className="flex size-6 sm:size-10 items-center justify-center rounded-full opacity-80 hover:opacity-100 focus-visible:outline-none shrink-0 transition-opacity"
+          className="flex size-6 sm:size-10 items-center justify-center rounded-full opacity-80 hover:opacity-100 focus-visible:outline-none shrink-0 transition-all duration-200 hover:bg-white/20 hover:scale-110"
         >
           <Bookmark className={`w-3.5 h-3.5 sm:w-5 sm:h-5 md:w-6 md:h-6 ${textColor}`} />
         </button>
       </div>
 
-      {/* Title - Single/double-line compact text with ellipsis */}
+      {/* Title - Single/double-line compact text with subtle horizontal slide */}
       <h3
-        className={`relative my-0.5 text-[11px] sm:text-base md:text-lg lg:text-xl font-bold leading-tight z-10 ${textColor}`}
+        className={`relative my-0.5 text-[11px] sm:text-base md:text-lg lg:text-xl font-bold leading-tight z-10 ${textColor} transition-transform duration-300 group-hover:translate-x-1`}
         style={{
           display: '-webkit-box',
           WebkitLineClamp: 2,
@@ -123,19 +123,19 @@ export function CourseCard({
           aria-valuemin={0}
           aria-valuemax={100}
         >
-          <div className="h-full rounded-full bg-white transition-all duration-300" style={{ width: `${progressPercent}%` }} />
+          <div className="h-full rounded-full bg-white transition-all duration-500 ease-out" style={{ width: `${progressPercent}%` }} />
         </div>
       </div>
 
-      {/* Footer / Action section - Wrapped button on new row for mobile */}
+      {/* Footer / Action section */}
       <div className="relative flex flex-wrap sm:flex-nowrap items-center justify-between gap-1.5 pt-1 z-10">
         <AvatarStack count={studentCount} />
         
-        {/* Compact full-width button on mobile */}
+        {/* Compact button with call-to-action hover effect */}
         <button
           type="button"
           onClick={onAction}
-          className="w-full sm:w-auto flex items-center justify-center shrink-0 h-[26px] sm:min-h-[40px] px-2 sm:px-4 rounded-md sm:rounded-lg bg-[#C6F232] text-[9px] sm:text-xs md:text-sm font-bold text-[#111111] transition-all hover:opacity-90 active:scale-95"
+          className="w-full sm:w-auto flex items-center justify-center shrink-0 h-[26px] sm:min-h-[40px] px-2 sm:px-4 rounded-md sm:rounded-lg bg-[#C6F232] text-[9px] sm:text-xs md:text-sm font-bold text-[#111111] transition-all duration-300 hover:brightness-110 active:scale-95 group-hover:scale-105"
         >
           <span className="truncate max-w-full sm:max-w-none">
             {actionLabel}

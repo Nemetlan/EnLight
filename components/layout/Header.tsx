@@ -22,7 +22,7 @@ export function Header() {
   return (
     <>
       {/* Floating Header Container (fixed to viewport) */}
-      <div className="fixed top-4 left-0 right-0 z-50 pointer-events-none flex items-center justify-center px-3">
+      <div className="fixed top-4 left-0 right-0 z-40 pointer-events-none flex items-center justify-center px-3">
         <header className="pointer-events-auto relative w-full max-w-7xl flex items-center justify-between gap-3 rounded-2xl border border-white/20 bg-white/60 px-4 py-2.5 backdrop-blur-md shadow-md sm:px-6 md:gap-4 md:py-3">
           
           {/* Logo */}
