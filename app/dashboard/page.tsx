@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { AppShell } from '@/components/layout/AppShell'
+import { AppShell } from '@/components/layout/AppShellDash'
 import { BookOpen, Plus, FileText, Calendar, Download, Settings } from 'lucide-react'
 
 const navigationCards = [

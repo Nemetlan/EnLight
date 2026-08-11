@@ -19,24 +19,23 @@ interface CourseCardProps {
 function AvatarStack({ count }: { count: number }) {
   const colors = ['bg-[#F97316]', 'bg-[#3B82F6]', 'bg-[#EC4899]', 'bg-[#10B981]']
   return (
-    <div className="flex items-center gap-1">
-      <div className="flex -space-x-1.5 sm:-space-x-2">
+    <div className="flex items-center gap-1 min-w-0">
+      <div className="flex -space-x-1.5 sm:-space-x-2 shrink-0">
         {colors.map((color, i) => (
           <div
             key={i}
-            className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full ${color} border-2 border-white/30`}
+            className={`w-3.5 h-3.5 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full ${color} border border-white/30`}
             aria-hidden="true"
           />
         ))}
       </div>
-      <span className="text-[10px] sm:text-xs md:text-sm font-medium opacity-90 ml-1">
+      <span className="text-[9px] sm:text-xs md:text-sm font-medium opacity-90 ml-0.5 truncate">
         +{count}
       </span>
     </div>
   )
 }
 
-// Subtle line-art SVG overlay for texture
 function LineArtOverlay() {
   return (
     <svg
@@ -66,63 +65,81 @@ export function CourseCard({
   tagBg,
   tagText,
   actionLabel = 'Continue Lesson',
+  onAction,
 }: CourseCardProps) {
   const progressPercent = Math.round((completedLessons / totalLessons) * 100)
 
   return (
     <article
-      className={`min-w-0 rounded-2xl sm:rounded-3xl p-3 sm:p-5 md:p-6 flex flex-col justify-between relative overflow-hidden aspect-[3/2] ${bgColor}`}
+      className={`w-full min-w-0 rounded-2xl sm:rounded-3xl p-2.5 sm:p-5 md:p-6 flex flex-col justify-between relative overflow-hidden h-[180px] sm:h-auto sm:aspect-[3/2] ${bgColor}`}
       aria-label={`${title} course`}
     >
       <LineArtOverlay />
 
       {/* Top row */}
-      <div className="relative flex items-start justify-between">
+      <div className="relative flex items-center justify-between gap-2 z-10">
         <span
-          className={`text-[10px] sm:text-xs md:text-sm font-semibold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ${tagBg} ${tagText}`}
+          className={`text-[9px] sm:text-xs md:text-sm font-semibold px-2 sm:px-3 py-0.5 rounded-full truncate max-w-[70%] ${tagBg} ${tagText}`}
+          title={category}
         >
           {category}
         </span>
         <button
+          type="button"
           aria-label={`Bookmark ${title}`}
-          className="flex size-11 items-center justify-center opacity-70 transition-opacity hover:opacity-100"
+          className="flex size-6 sm:size-10 items-center justify-center rounded-full opacity-80 hover:opacity-100 focus-visible:outline-none shrink-0 transition-opacity"
         >
-          <Bookmark className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${textColor}`} />
+          <Bookmark className={`w-3.5 h-3.5 sm:w-5 sm:h-5 md:w-6 md:h-6 ${textColor}`} />
         </button>
       </div>
 
-      {/* Title */}
+      {/* Title - Single/double-line compact text with ellipsis */}
       <h3
-        className={`relative text-sm sm:text-base md:text-lg lg:text-xl font-bold leading-snug text-balance ${textColor}`}
+        className={`relative my-0.5 text-[11px] sm:text-base md:text-lg lg:text-xl font-bold leading-tight z-10 ${textColor}`}
+        style={{
+          display: '-webkit-box',
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }}
+        title={title}
       >
         {title}
       </h3>
 
-      {/* Progress */}
-      <div className="relative flex flex-col gap-1 sm:gap-1.5">
-        <div className="flex justify-between items-center text-[10px] sm:text-xs md:text-sm">
-          <span className={`opacity-80 ${textColor}`}>Progress</span>
-          <span className={`font-medium ${textColor}`}>
+      {/* Progress section */}
+      <div className="relative flex flex-col gap-0.5 sm:gap-1.5 z-10">
+        <div className="flex justify-between items-center text-[9px] sm:text-xs md:text-sm gap-2">
+          <span className={`opacity-80 shrink-0 ${textColor}`}>Progress</span>
+          <span className={`font-medium truncate ${textColor}`}>
             {completedLessons}/{totalLessons} lessons
           </span>
         </div>
         <div
-          className="w-full h-1 sm:h-1.5 md:h-2 rounded-full bg-white/30"
+          className="w-full h-1 sm:h-1.5 md:h-2 rounded-full bg-white/30 overflow-hidden"
           role="progressbar"
           aria-valuenow={progressPercent}
           aria-valuemin={0}
           aria-valuemax={100}
-          aria-label={`${progressPercent}% complete`}
         >
-          <div className="h-full rounded-full bg-white" style={{ width: `${progressPercent}%` }} />
+          <div className="h-full rounded-full bg-white transition-all duration-300" style={{ width: `${progressPercent}%` }} />
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="relative flex items-center justify-between">
+      {/* Footer / Action section - Wrapped button on new row for mobile */}
+      <div className="relative flex flex-wrap sm:flex-nowrap items-center justify-between gap-1.5 pt-1 z-10">
         <AvatarStack count={studentCount} />
-        <button className="min-h-11 max-w-[55%] rounded-lg bg-[#C6F232] px-2.5 text-[10px] font-semibold text-[#111111] transition-opacity hover:opacity-90 sm:px-3.5 sm:text-xs md:px-4 md:py-2 md:text-sm">
-          {actionLabel}
+        
+        {/* Compact full-width button on mobile */}
+        <button
+          type="button"
+          onClick={onAction}
+          className="w-full sm:w-auto flex items-center justify-center shrink-0 h-[26px] sm:min-h-[40px] px-2 sm:px-4 rounded-md sm:rounded-lg bg-[#C6F232] text-[9px] sm:text-xs md:text-sm font-bold text-[#111111] transition-all hover:opacity-90 active:scale-95"
+        >
+          <span className="truncate max-w-full sm:max-w-none">
+            {actionLabel}
+          </span>
         </button>
       </div>
     </article>
