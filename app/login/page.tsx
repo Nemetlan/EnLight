@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, Lock, Mail, ArrowRight, UserPlus } from 'lucide-react'
 
-// Simple SVG Google Icon component
+// SVG Google Icon component
 function GoogleIcon() {
   return (
     <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
@@ -32,46 +32,58 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
 
   return (
-    <div className="min-h-screen bg-[#F4F5F7] flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Slimmer Square Login Card */}
-      <div className="relative bg-white rounded-3xl shadow-xl w-full max-w-xs sm:max-w-sm sm:aspect-square p-5 sm:p-7 flex flex-col justify-between border border-[#E5E7EB]/60">
-
-        {/* Header / Logo */}
-        <div className="text-center">
-          <div className="text-2xl sm:text-3xl font-black tracking-tight select-none">
-            <span className="text-[#FF4D2E]">En</span>
-            <span className="text-[#111111]">Light</span>
+    <div className="min-h-screen bg-[#F4F5F7] flex items-center justify-center p-4 relative overflow-hidden font-sans">
+      
+      {/* OG Background Accent Radial Circles */}
+      <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-40">
+        <div className="w-[600px] h-[600px] rounded-full border border-gray-200/80 flex items-center justify-center">
+          <div className="w-[450px] h-[450px] rounded-full border border-gray-200/80 flex items-center justify-center">
+            <div className="w-[300px] h-[300px] rounded-full border border-gray-200/80" />
           </div>
-          <p className="text-[11px] sm:text-xs text-[#6B7280] mt-0.5 font-medium">
-            Sign in to continue learning
+        </div>
+      </div>
+
+      {/* Main Card */}
+      <div className="relative z-10 bg-white rounded-3xl shadow-xl shadow-black/5 w-full max-w-xs sm:max-w-sm p-6 sm:p-8 flex flex-col justify-between border border-[#E5E7EB]">
+
+        {/* Brand Header */}
+        <div className="text-center">
+          <div className="inline-flex items-center gap-1">
+            <span className="text-3xl font-black tracking-tight text-[#FF4D2E]">En</span>
+            <span className="text-3xl font-black tracking-tight text-[#111111]">Light</span>
+            <span className="h-2 w-2 rounded-full bg-[#C6F232] ml-0.5" />
+          </div>
+          <p className="text-xs text-[#6B7280] mt-1 font-semibold tracking-wide uppercase text-[10px]">
+            Learning Platform Portal
           </p>
         </div>
 
         {/* Form Body */}
-        <form className="flex flex-col gap-2.5 my-auto" onSubmit={(e) => e.preventDefault()}>
-          {/* Google Login Button */}
+        <form className="flex flex-col gap-3 my-auto pt-4" onSubmit={(e) => e.preventDefault()}>
+          
+          {/* Google SSO */}
           <button
             type="button"
-            className="w-full py-2 sm:py-2.5 px-3 bg-white border border-[#E5E7EB] hover:bg-[#F9FAFB] text-[#111111] text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.99]"
+            className="w-full py-2.5 px-4 bg-white border border-[#E5E7EB] hover:bg-[#F8FAFC] text-[#111111] text-xs font-bold rounded-2xl flex items-center justify-center gap-2.5 transition-all shadow-sm active:scale-[0.98]"
           >
             <GoogleIcon />
             <span>Continue with Google</span>
           </button>
 
           {/* Divider */}
-          <div className="flex items-center gap-2 my-0.5">
+          <div className="flex items-center gap-3 my-0.5">
             <div className="flex-1 h-px bg-[#E5E7EB]" />
-            <span className="text-[10px] font-medium text-[#9CA3AF] uppercase tracking-wider">or</span>
+            <span className="text-[10px] font-bold text-[#9CA3AF] uppercase tracking-wider">or</span>
             <div className="flex-1 h-px bg-[#E5E7EB]" />
           </div>
 
-          {/* Email Field */}
-          <div className="flex flex-col gap-1">
+          {/* Email Input */}
+          <div className="flex flex-col gap-1.5">
             <label
-              className="text-[10px] font-semibold text-[#6B7280] uppercase tracking-wider"
+              className="text-[10px] font-bold text-[#6B7280] uppercase tracking-wider flex items-center gap-1"
               htmlFor="login-email"
             >
-              Email Address
+              <Mail size={12} className="text-[#9CA3AF]" /> Email Address
             </label>
             <input
               id="login-email"
@@ -79,22 +91,22 @@ export default function LoginPage() {
               placeholder="you@example.com"
               autoComplete="email"
               required
-              className="w-full px-3 py-1.5 sm:py-2 rounded-xl bg-[#F9FAFB] border border-[#E5E7EB] text-xs text-[#111111] placeholder:text-[#9CA3AF] outline-none focus:bg-white focus:border-[#FF4D2E] transition-all"
+              className="w-full px-3.5 py-2 rounded-2xl bg-[#F8FAFC] border border-[#E5E7EB] text-xs font-medium text-[#111111] placeholder:text-[#9CA3AF] outline-none focus:bg-white focus:border-[#111111] focus:ring-1 focus:ring-[#111111] transition-all"
             />
           </div>
 
-          {/* Password Field */}
-          <div className="flex flex-col gap-1">
+          {/* Password Input */}
+          <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
               <label
-                className="text-[10px] font-semibold text-[#6B7280] uppercase tracking-wider"
+                className="text-[10px] font-bold text-[#6B7280] uppercase tracking-wider flex items-center gap-1"
                 htmlFor="login-password"
               >
-                Password
+                <Lock size={12} className="text-[#9CA3AF]" /> Password
               </label>
               <button
                 type="button"
-                className="text-[10px] font-semibold text-[#FF4D2E] hover:underline"
+                className="text-[10px] font-bold text-[#FF4D2E] hover:underline"
               >
                 Forgot?
               </button>
@@ -106,32 +118,43 @@ export default function LoginPage() {
                 placeholder="••••••••"
                 autoComplete="current-password"
                 required
-                className="w-full px-3 py-1.5 sm:py-2 pr-10 rounded-xl bg-[#F9FAFB] border border-[#E5E7EB] text-xs text-[#111111] outline-none focus:bg-white focus:border-[#FF4D2E] transition-all"
+                className="w-full px-3.5 py-2 pr-10 rounded-2xl bg-[#F8FAFC] border border-[#E5E7EB] text-xs font-medium text-[#111111] outline-none focus:bg-white focus:border-[#111111] focus:ring-1 focus:ring-[#111111] transition-all"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9CA3AF] hover:text-[#6B7280] transition-colors"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#9CA3AF] hover:text-[#111111] transition-colors"
               >
                 {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
               </button>
             </div>
           </div>
 
+          {/* Primary Action: Sign In Button */}
           <button
             type="submit"
-            className="w-full py-2 sm:py-2.5 bg-[#FF4D2E] text-white text-xs font-bold rounded-xl hover:bg-[#E03E21] active:scale-[0.99] transition-all shadow-md shadow-[#FF4D2E]/20 mt-0.5"
+            className="w-full py-2.5 bg-[#111111] text-white text-xs font-bold rounded-2xl hover:bg-[#222222] active:scale-[0.98] transition-all shadow-lg shadow-black/10 flex items-center justify-center gap-2 mt-1"
           >
-            Sign In
+            <span>Sign In to EnLight</span>
+            <ArrowRight size={14} className="text-[#C6F232]" />
           </button>
+
+          {/* Secondary Action: Register Button */}
+          <Link
+            href="/register"
+            className="w-full py-2.5 bg-white border border-[#E5E7EB] hover:bg-[#F8FAFC] hover:border-[#111111] text-[#111111] text-xs font-bold rounded-2xl transition-all shadow-sm active:scale-[0.98] flex items-center justify-center gap-2"
+          >
+            <UserPlus size={14} className="text-[#FF4D2E]" />
+            <span>Create New Account</span>
+          </Link>
         </form>
 
-        {/* Footer */}
-        <div className="pt-1">
-          <p className="text-center text-[11px] sm:text-xs text-[#6B7280]">
-            {"Don't have an account? "}
-            <Link href="/dashboard" className="font-semibold text-[#FF4D2E] hover:underline">
+        {/* Footer Link */}
+        <div className="pt-3 border-t border-[#E5E7EB]">
+          <p className="text-center text-[11px] text-[#6B7280]">
+            {"Need platform access? "}
+            <Link href="/dashboard" className="font-bold text-[#FF4D2E] hover:underline">
               Contact your tutor
             </Link>
           </p>

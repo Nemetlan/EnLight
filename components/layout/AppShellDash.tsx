@@ -1,7 +1,7 @@
 'use client'
 
 import { Sidebar } from '@/components/layout/Sidebar'
-import { Header } from '@/components/layout/Header'
+import { Header } from '@/components/layout/HeaderDash'
 
 interface AppShellDashProps {
   children: React.ReactNode
@@ -12,7 +12,7 @@ export function AppShell({ children }: AppShellDashProps) {
     <div className="flex h-[100dvh] min-h-0 max-w-full overflow-hidden bg-[#F4F5F7]">
       {/* Sidebar - Hidden on mobile, visible on desktop */}
       <div className="hidden md:flex items-center justify-center z-20">
-        <Sidebar />
+        {/* <Sidebar /> */}
       </div>
 
       {/* Main content wrapper */}
@@ -23,7 +23,7 @@ export function AppShell({ children }: AppShellDashProps) {
         </div>
 
         {/* Scrollable content section running underneath header */}
-        <main className="mt-16 flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto overflow-x-hidden px-4 pb-6 pt-20 sm:px-6 md:pt-5">
+        <main className="flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto overflow-x-hidden px-4 pb-6 pt-20 sm:px-6 md:pt-5">
           {children}
         </main>
       </div>

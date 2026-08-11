@@ -10,7 +10,6 @@ const mobileNavItems = [
   { icon: LayoutGrid, label: 'Dashboard', href: '/dashboard' },
   { icon: BookOpen, label: 'My Library', href: '/library' },
   { icon: BookCopy, label: 'Request Catalog', href: '/request-catalog' },
-  { icon: CalendarDays, label: 'Class Diary', href: '/diary' },
   { icon: FolderDown, label: 'Resources', href: '/resources' },
   { icon: BookMarked, label: 'About', href: '/about' },
 ]
