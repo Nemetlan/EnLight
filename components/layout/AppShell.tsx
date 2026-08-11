@@ -32,8 +32,7 @@ export function AppShell({ children }: AppShellProps) {
 
         <Header />
 
-        <main className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden px-4 pb-6 pt-1 sm:px-6 md:pt-2">
-
+        <main className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden px-4 pb-6 pt-24 sm:px-6 md:pt-24 items-center justify-center">
           {children}
 
         </main>

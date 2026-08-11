@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { AppShell } from '@/components/layout/AppShell'
+import { AppShell } from '@/components/layout/AppShellDash'
 import { BookOpen, Plus, FileText, Calendar, Download, Settings } from 'lucide-react'
 
 const navigationCards = [
@@ -73,58 +73,64 @@ export default function DashboardPage() {
 
   return (
     <AppShell>
-      <div className="flex w-full min-w-0 flex-col gap-6">
-        {/* Greeting Section */}
-        <div>
-          <p className="text-microcopy text-[#6B7280] mb-1">{greeting}</p>
-          <h1 className="text-2xl font-semibold text-[#111111]">Welcome back, Jordan</h1>
-          <p className="text-sm text-[#6B7280] mt-2">Ready to continue your learning journey?</p>
+      <div className="flex w-full min-w-0 flex-col gap-6 py-4">
+        
+        {/* Centered Greeting Section */}
+        <div className="w-full mx-auto max-w-2xl px-4 text-center flex flex-col items-center justify-center">
+          <p className="text-xs uppercase tracking-wider text-[#6B7280] mb-1 font-medium">{greeting}</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#111111]">Welcome back, Jordan</h1>
+          <p className="text-sm text-[#6B7280] mt-1.5 max-w-md">
+            Ready to continue your learning journey?
+          </p>
         </div>
 
         {/* Navigation Grid Cards */}
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-          {navigationCards.map((card) => {
-            const Icon = card.icon
-            return (
-              <Link
-                key={card.id}
-                href={card.href}
-                className="relative min-w-0 overflow-hidden rounded-2xl h-32 sm:h-40 flex flex-col justify-between p-3 sm:p-5 transition-shadow hover:shadow-md"
-                style={{ backgroundColor: card.bgColor }}
-              >
-                {/* Line-art overlay */}
-                <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none" aria-hidden="true">
-                  <defs>
-                    <pattern id={`grid-${card.id}`} width="20" height="20" patternUnits="userSpaceOnUse">
-                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="white" strokeWidth="0.5" />
-                    </pattern>
-                  </defs>
-                  <rect width="100%" height="100%" fill={`url(#grid-${card.id})`} />
-                </svg>
+        <div className="w-full mx-auto max-w-2xl px-4 flex justify-center">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 w-full justify-center">
+            {navigationCards.map((card) => {
+              const Icon = card.icon
+              return (
+                <Link
+                  key={card.id}
+                  href={card.href}
+                  className="relative min-w-0 aspect-square overflow-hidden rounded-2xl flex flex-col justify-between p-3.5 sm:p-5 transition-all hover:shadow-md hover:-translate-y-0.5"
+                  style={{ backgroundColor: card.bgColor }}
+                >
+                  {/* Line-art overlay */}
+                  <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none" aria-hidden="true">
+                    <defs>
+                      <pattern id={`grid-${card.id}`} width="20" height="20" patternUnits="userSpaceOnUse">
+                        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="white" strokeWidth="0.5" />
+                      </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill={`url(#grid-${card.id})`} />
+                  </svg>
 
-                {/* Icon and label top */}
-                <div className="relative z-10 flex items-start justify-between">
-                  <div
-                    className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: card.accent + '33' }}
-                  >
-                    <Icon size={18} style={{ color: card.accent }} />
+                  {/* Icon top */}
+                  <div className="relative z-10 flex items-start justify-between">
+                    <div
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{ backgroundColor: card.accent + '33' }}
+                    >
+                      <Icon size={20} style={{ color: card.accent }} />
+                    </div>
                   </div>
-                </div>
 
-                {/* Title and subtitle bottom */}
-                <div className="relative z-10">
-                  <p className="text-sm font-semibold" style={{ color: card.accent }}>
-                    {card.label}
-                  </p>
-                  <p className="text-xs mt-0.5" style={{ color: card.accent + 'B3' }}>
-                    {card.subtitle}
-                  </p>
-                </div>
-              </Link>
-            )
-          })}
+                  {/* Title and subtitle bottom */}
+                  <div className="relative z-10">
+                    <p className="text-xs sm:text-sm font-semibold line-clamp-1" style={{ color: card.accent }}>
+                      {card.label}
+                    </p>
+                    <p className="text-[11px] sm:text-xs mt-0.5 line-clamp-1" style={{ color: card.accent + 'B3' }}>
+                      {card.subtitle}
+                    </p>
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
         </div>
+
       </div>
     </AppShell>
   )
