@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { Bookmark } from 'lucide-react'
 
 interface CourseCardProps {
@@ -14,6 +15,7 @@ interface CourseCardProps {
   tagText: string
   actionLabel?: string
   onAction?: () => void
+  lessonHref?: string
 }
 
 function AvatarStack({ count }: { count: number }) {
@@ -66,6 +68,7 @@ export function CourseCard({
   tagText,
   actionLabel = 'Continue Lesson',
   onAction,
+  lessonHref,
 }: CourseCardProps) {
   const progressPercent = Math.round((completedLessons / totalLessons) * 100)
 
@@ -132,15 +135,15 @@ export function CourseCard({
         <AvatarStack count={studentCount} />
         
         {/* Compact button with call-to-action hover effect */}
-        <button
-          type="button"
-          onClick={onAction}
-          className="w-full sm:w-auto flex items-center justify-center shrink-0 h-[26px] sm:min-h-[40px] px-2 sm:px-4 rounded-md sm:rounded-lg bg-[#C6F232] text-[9px] sm:text-xs md:text-sm font-bold text-[#111111] transition-all duration-300 hover:brightness-110 active:scale-95 group-hover:scale-105"
-        >
-          <span className="truncate max-w-full sm:max-w-none">
-            {actionLabel}
-          </span>
-        </button>
+        {lessonHref ? (
+          <Link href={lessonHref} className="w-full sm:w-auto flex items-center justify-center shrink-0 h-[26px] sm:min-h-[40px] px-2 sm:px-4 rounded-md sm:rounded-lg bg-[#C6F232] text-[9px] sm:text-xs md:text-sm font-bold text-[#111111] transition-all duration-300 hover:brightness-110 active:scale-95 group-hover:scale-105">
+            <span className="truncate max-w-full sm:max-w-none">{actionLabel}</span>
+          </Link>
+        ) : (
+          <button type="button" onClick={onAction} className="w-full sm:w-auto flex items-center justify-center shrink-0 h-[26px] sm:min-h-[40px] px-2 sm:px-4 rounded-md sm:rounded-lg bg-[#C6F232] text-[9px] sm:text-xs md:text-sm font-bold text-[#111111] transition-all duration-300 hover:brightness-110 active:scale-95 group-hover:scale-105">
+            <span className="truncate max-w-full sm:max-w-none">{actionLabel}</span>
+          </button>
+        )}
       </div>
     </article>
   )
