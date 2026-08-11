@@ -1,7 +1,8 @@
 'use client'
 
-import { useMemo, useState, useEffect, useRef } from 'react'
+import { useMemo, useState, useEffect, useRef, useCallback, type ChangeEvent } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import {
   Check,
   ChevronLeft,
@@ -100,10 +101,20 @@ const tabItems = [
   { id: 'discussion', label: 'Discussion / Q&A' },
 ]
 
-export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; lessonId?: string }) {
+interface LessonPlayerProps {
+  courseSlug?: string
+  lessonId?: string
+  onNextLesson?: () => void
+}
+
+const speedOptions = [0.5, 0.75, 1, 1.25, 1.5, 2] as const
+
+export function LessonPlayer({ courseSlug, lessonId, onNextLesson }: LessonPlayerProps) {
+  const router = useRouter()
   const course = getLessonCourse(courseSlug)
   const lesson = getLesson(course, lessonId)
   const currentIndex = course.lessons.findIndex((item) => item.id === lesson.id)
+  const nextLesson = course.lessons[currentIndex + 1]
   const [activeTab, setActiveTab] = useState('overview')
 
   const playerRef = useRef<any>(null)
@@ -114,9 +125,178 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [isMuted, setIsMuted] = useState(false)
-  const [playbackRate, setPlaybackRate] = useState(1)
+  const [playbackRate, setPlaybackRate] = useState<(typeof speedOptions)[number]>(1)
+  const [captionTracks, setCaptionTracks] = useState<any[]>([])
+  const [selectedCaption, setSelectedCaption] = useState('off')
+  const [audioTracks, setAudioTracks] = useState<any[]>([])
+  const [selectedAudioTrack, setSelectedAudioTrack] = useState('default')
 
   const decodedId = useMemo(() => decodeVideoId(lesson.videoIdEncoded), [lesson.videoIdEncoded])
+
+  const advanceLesson = useCallback(() => {
+    if (typeof onNextLesson === 'function') {
+      onNextLesson()
+      return
+    }
+
+    if (nextLesson) {
+      router.push(`/lesson?course=${course.slug}&lesson=${nextLesson.id}`)
+    }
+  }, [course.slug, nextLesson, onNextLesson, router])
+
+  const updateTrackLists = useCallback((player: any) => {
+    if (!player) return
+
+    try {
+      const captions = player.getOption?.('captions', 'tracklist')
+      if (Array.isArray(captions)) {
+        setCaptionTracks(captions)
+      }
+    } catch {
+      setCaptionTracks([])
+    }
+
+    try {
+      const audio = player.getOption?.('audioTrack', 'tracklist') ?? player.getAudioTracks?.()
+      if (Array.isArray(audio)) {
+        setAudioTracks(audio)
+      }
+    } catch {
+      setAudioTracks([])
+    }
+  }, [])
+
+  const applyCaptionTrack = useCallback(
+    (trackId: string) => {
+      if (!playerRef.current || typeof playerRef.current.setOption !== 'function') return
+      setSelectedCaption(trackId)
+
+      if (trackId === 'off') {
+        try {
+          playerRef.current.setOption('captions', 'track', { languageCode: '' })
+        } catch {
+          // no-op
+        }
+        return
+      }
+
+      const track = captionTracks.find(
+        (track) => track.trackId === trackId || track.languageCode === trackId || track.name === trackId || track.label === trackId
+      )
+      if (track) {
+        try {
+          playerRef.current.setOption('captions', 'track', track)
+        } catch {
+          // no-op
+        }
+      }
+    },
+    [captionTracks]
+  )
+
+  const applyAudioTrack = useCallback(
+    (trackId: string) => {
+      if (!playerRef.current) return
+      setSelectedAudioTrack(trackId)
+
+      const track = audioTracks.find(
+        (track) => track.id === trackId || track.audioTrackId === trackId || track.languageCode === trackId || track.name === trackId || track.label === trackId
+      )
+      if (!track) return
+
+      try {
+        if (typeof playerRef.current.setAudioTrack === 'function') {
+          playerRef.current.setAudioTrack(track.id ?? track.audioTrackId ?? track.languageCode ?? track)
+        } else if (typeof playerRef.current.setOption === 'function') {
+          playerRef.current.setOption('audioTrack', 'track', track)
+        }
+      } catch {
+        // no-op
+      }
+    },
+    [audioTracks]
+  )
+
+  const handlePlaybackRate = useCallback(
+    (rate: (typeof speedOptions)[number]) => {
+      if (!playerRef.current || typeof playerRef.current.setPlaybackRate !== 'function') return
+      playerRef.current.setPlaybackRate(rate)
+      setPlaybackRate(rate)
+    },
+    []
+  )
+
+  const seekBy = useCallback(
+    (amount: number) => {
+      if (!playerRef.current || typeof playerRef.current.getCurrentTime !== 'function') return
+      const current = playerRef.current.getCurrentTime() || 0
+      const target = Math.max(0, Math.min(playerRef.current.getDuration?.() || duration || 0, current + amount))
+      playerRef.current.seekTo(target, true)
+      setCurrentTime(target)
+    },
+    [duration]
+  )
+
+  const handleKeydown = useCallback(
+    (event: globalThis.KeyboardEvent) => {
+      const target = event.target as HTMLElement
+      if (target?.tagName === 'INPUT' || target?.tagName === 'TEXTAREA' || target?.tagName === 'SELECT' || target?.isContentEditable) {
+        return
+      }
+
+      const key = event.key.toLowerCase()
+      const shift = event.shiftKey
+
+      if (key === ' ' || key === 'k') {
+        event.preventDefault()
+        if (playerRef.current) {
+          if (isPlaying) {
+            playerRef.current.pauseVideo()
+          } else {
+            playerRef.current.playVideo()
+          }
+        }
+        return
+      }
+
+      if (key === 'j' || key === 'arrowleft') {
+        event.preventDefault()
+        seekBy(-10)
+        return
+      }
+
+      if (key === 'l' || key === 'arrowright') {
+        event.preventDefault()
+        seekBy(10)
+        return
+      }
+
+      if ((shift && key === '.') || key === '>') {
+        event.preventDefault()
+        const nextIndex = speedOptions.indexOf(playbackRate) + 1
+        if (nextIndex < speedOptions.length) {
+          handlePlaybackRate(speedOptions[nextIndex])
+        }
+        return
+      }
+
+      if ((shift && key === ',') || key === '<') {
+        event.preventDefault()
+        const prevIndex = speedOptions.indexOf(playbackRate) - 1
+        if (prevIndex >= 0) {
+          handlePlaybackRate(speedOptions[prevIndex])
+        }
+        return
+      }
+
+      if (shift && key === 'n') {
+        event.preventDefault()
+        advanceLesson()
+        return
+      }
+    },
+    [advanceLesson, isPlaying, handlePlaybackRate, playbackRate, seekBy]
+  )
 
   // Initialize YT Player API cleanly on a target DIV
   useEffect(() => {
@@ -125,7 +305,6 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
     const createPlayer = () => {
       if (!videoElementRef.current || !window.YT || !window.YT.Player) return
 
-      // Destroy previous instance on video change
       if (playerRef.current?.destroy) {
         playerRef.current.destroy()
       }
@@ -138,6 +317,8 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
           disablekb: 1,
           modestbranding: 1,
           rel: 0,
+          fs: 0,
+          iv_load_policy: 3,
           enablejsapi: 1,
           origin: window.location.origin,
         },
@@ -147,11 +328,15 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
             if (typeof event.target.setPlaybackRate === 'function') {
               event.target.setPlaybackRate(playbackRate)
             }
+            updateTrackLists(event.target)
           },
           onStateChange: (event: any) => {
             if (event.data === window.YT.PlayerState.PLAYING) setIsPlaying(true)
             if (event.data === window.YT.PlayerState.PAUSED) setIsPlaying(false)
-            if (event.data === window.YT.PlayerState.ENDED) setIsPlaying(false)
+            if (event.data === window.YT.PlayerState.ENDED) {
+              setIsPlaying(false)
+              advanceLesson()
+            }
           },
         },
       })
@@ -171,9 +356,8 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
         playerRef.current.destroy()
       }
     }
-  }, [decodedId])
+  }, [decodedId, playbackRate, updateTrackLists, advanceLesson])
 
-  // Time progress synchronization ticker
   useEffect(() => {
     const interval = setInterval(() => {
       if (playerRef.current && typeof playerRef.current.getCurrentTime === 'function') {
@@ -188,7 +372,17 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
     return () => clearInterval(interval)
   }, [duration])
 
-  // Actions
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeydown)
+    return () => window.removeEventListener('keydown', handleKeydown)
+  }, [handleKeydown])
+
+  useEffect(() => {
+    if (playerRef.current && typeof playerRef.current.setPlaybackRate === 'function') {
+      playerRef.current.setPlaybackRate(playbackRate)
+    }
+  }, [playbackRate])
+
   const togglePlay = () => {
     if (!playerRef.current) return
     if (isPlaying) {
@@ -209,13 +403,7 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
     }
   }
 
-  const handlePlaybackRate = (rate: number) => {
-    if (!playerRef.current || typeof playerRef.current.setPlaybackRate !== 'function') return
-    playerRef.current.setPlaybackRate(rate)
-    setPlaybackRate(rate)
-  }
-
-  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSeek = (e: ChangeEvent<HTMLInputElement>) => {
     const seekToTime = parseFloat(e.target.value)
     setCurrentTime(seekToTime)
     if (playerRef.current && typeof playerRef.current.seekTo === 'function') {
@@ -250,18 +438,20 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
 
       <div className="mt-6 grid gap-6 lg:grid-cols-12 lg:items-start">
         <section className="lg:col-span-8">
-          
           {/* Main Video Wrapper */}
           <div
             ref={playerContainerRef}
             className="group relative overflow-hidden rounded-3xl border border-[#E5E7EB] bg-[#111111] shadow-xl"
+            onContextMenu={(event) => event.preventDefault()}
+            tabIndex={0}
+            onKeyDown={(event) => handleKeydown(event.nativeEvent)}
           >
             <div className="aspect-[16/9] relative bg-[#111111]">
               {/* API Target Element */}
               <div ref={videoElementRef} className="h-full w-full" />
 
               {/* Top Shielding Layer (prevents clicking title links) */}
-              <div className="absolute inset-x-0 top-0 h-16 z-10 bg-transparent" />
+              <div className="absolute inset-x-0 top-0 h-16 z-20 bg-transparent" />
 
               {/* Click-to-Play/Pause Center Trigger */}
               <button
@@ -274,8 +464,6 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
 
             {/* Custom Aesthetic Control Bar */}
             <div className="absolute bottom-0 inset-x-0 z-30 flex flex-col justify-end bg-gradient-to-t from-black/95 via-black/60 to-transparent p-4 opacity-100 transition-opacity duration-300 group-hover:opacity-100 sm:p-5">
-              
-              {/* Seek Slider */}
               <div className="relative mb-3 flex items-center w-full">
                 <input
                   type="range"
@@ -287,9 +475,8 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
                 />
               </div>
 
-              {/* Controls */}
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="flex flex-wrap items-center gap-3">
                   <button
                     type="button"
                     onClick={togglePlay}
@@ -311,29 +498,73 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-xs font-semibold text-white/90">
-                  <span>Speed</span>
-                  <select
-                    aria-label="Playback speed"
-                    value={playbackRate}
-                    onChange={(event) => handlePlaybackRate(Number(event.target.value))}
-                    className="rounded-full bg-transparent py-1 pl-2 pr-6 text-xs font-semibold text-white outline-none ring-0 focus:ring-0"
-                  >
-                    {[0.75, 1, 1.25, 1.5, 2].map((rate) => (
-                      <option key={rate} value={rate} className="bg-white text-[#111111]">
-                        {rate}x
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-xs font-semibold text-white/90">
+                    <span>Speed</span>
+                    <select
+                      aria-label="Playback speed"
+                      value={playbackRate}
+                    onChange={(event) => handlePlaybackRate(Number(event.target.value) as (typeof speedOptions)[number])}
+                      className="rounded-full bg-transparent py-1 pl-2 pr-6 text-xs font-semibold text-white outline-none ring-0 focus:ring-0"
+                    >
+                      {speedOptions.map((rate) => (
+                        <option key={rate} value={rate} className="bg-white text-[#111111]">
+                          {rate}x
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                <button
-                  type="button"
-                  onClick={toggleFullscreen}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
-                >
-                  <Maximize size={16} />
-                </button>
+                  <div className="flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-xs font-semibold text-white/90">
+                    <span>Captions</span>
+                    <select
+                      aria-label="Subtitle track"
+                      value={selectedCaption}
+                      onChange={(event) => applyCaptionTrack(event.target.value)}
+                      className="rounded-full bg-transparent py-1 pl-2 pr-6 text-xs font-semibold text-white outline-none ring-0 focus:ring-0"
+                    >
+                      <option value="off" className="bg-white text-[#111111]">Off</option>
+                      {captionTracks.map((track) => (
+                        <option
+                          key={track.trackId ?? track.languageCode ?? track.name}
+                          value={track.trackId ?? track.languageCode ?? track.name}
+                          className="bg-white text-[#111111]"
+                        >
+                          {track.displayName ?? track.name ?? track.languageCode ?? 'Caption'}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-xs font-semibold text-white/90">
+                    <span>Audio</span>
+                    <select
+                      aria-label="Audio track"
+                      value={selectedAudioTrack}
+                      onChange={(event) => applyAudioTrack(event.target.value)}
+                      className="rounded-full bg-transparent py-1 pl-2 pr-6 text-xs font-semibold text-white outline-none ring-0 focus:ring-0"
+                    >
+                      <option value="default" className="bg-white text-[#111111]">Default</option>
+                      {audioTracks.map((track) => (
+                        <option
+                          key={track.id ?? track.audioTrackId ?? track.languageCode ?? track.name}
+                          value={track.id ?? track.audioTrackId ?? track.languageCode ?? track.name}
+                          className="bg-white text-[#111111]"
+                        >
+                          {track.label ?? track.name ?? track.languageCode ?? 'Audio'}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={toggleFullscreen}
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+                  >
+                    <Maximize size={16} />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -436,3 +667,4 @@ export function LessonPlayer({ courseSlug, lessonId }: { courseSlug?: string; le
     </div>
   )
 }
+
