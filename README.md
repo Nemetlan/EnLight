@@ -10,7 +10,7 @@ Built with bleeding-edge technologies including **Next.js 16 (App Router)**, **R
 
 *   **📱 Interactive Student Dashboard**: Personalized, dynamic time-of-day greetings and a styled navigation grid featuring vibrant neon-accented card buttons to guide students to key modules.
 *   **📚 My Library**: Categorized course lists (Civil, Mechanical, and Electrical) with interactive, instant filtering and responsive course cards to monitor completed lessons and student engagement.
-*   **📅 Interactive Class Diary**: A complete, weekly scheduling ledger (Past Week, Current Week, Next Week) mapping out days, dates, subjects, topics, and teacher names, combined with an interactive homework checklist for real-time task completion tracking.
+*   **📅 Schedule Overview**: A weekly scheduling ledger (Past Week, Current Week, Next Week) mapping days, dates, subjects, topics, and teacher names, combined with an interactive homework checklist for task tracking.
 *   **🔔 Floating Glassmorphism Header**: A sticky header with a built-in search bar and a responsive, interactive slide-over notification drawer displaying recent assignment updates, reminders, and schedules.
 *   **🎨 Highly Polished Aesthetic**: Beautiful custom-crafted line-art SVGs, modern glassmorphic overlays, premium color gradients, and tailored typography.
 
@@ -87,7 +87,7 @@ EnLight/
 │   ├── globals.css       # Core Tailwind v4 configuration & design tokens
 │   ├── layout.tsx        # Base root layout wrapper
 │   ├── page.tsx          # Root redirect to the dashboard
-│   └── [routes]/         # Individual page routes (dashboard, library, diary, etc.)
+│   └── [routes]/         # Individual page routes (dashboard, library, etc.)
 ├── components/           # UI Components
 │   ├── dashboard/        # Dashboard cards, lesson tables, and sidebar widgets
 │   ├── layout/           # Shared wrappers (AppShell, glassmorphic Header, Sidebar)

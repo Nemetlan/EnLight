@@ -25,15 +25,6 @@ const navigationCards = [
     accent: '#C6F232',
   },
   {
-    id: 3,
-    label: 'Class Diary',
-    subtitle: 'Your schedule',
-    href: '/diary',
-    icon: Calendar,
-    bgColor: '#111111',
-    accent: '#C6F232',
-  },
-  {
     id: 4,
     label: 'Resources',
     subtitle: 'Study materials',

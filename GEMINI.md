@@ -22,7 +22,7 @@ This workspace contains the source code for **EnLight**, a modern, visually stri
 │   ├── globals.css       # Core Tailwind v4 setup, design tokens, typography utility classes
 │   ├── layout.tsx        # Base root layout
 │   ├── page.tsx          # Root redirect to /dashboard
-│   └── [routes]/         # Individual app routes (dashboard, library, diary, settings, etc.)
+│   └── [routes]/         # Individual app routes (dashboard, library, settings, etc.)
 ├── components/           # React Components organized by context
 │   ├── dashboard/        # Dashboard specific widgets and cards
 │   ├── layout/           # Shared layout wrappers (AppShell, Header, Sidebar, etc.)
