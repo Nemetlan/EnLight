@@ -23,7 +23,7 @@ export function AppShell({ children }: AppShellDashProps) {
         </div>
 
         {/* Scrollable content section running underneath header */}
-        <main className="-mt-16 flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto overflow-x-hidden px-4 pb-6 pt-20 sm:px-6 md:pt-5">
+        <main className="mt-16 flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto overflow-x-hidden px-4 pb-6 pt-20 sm:px-6 md:pt-5">
           {children}
         </main>
       </div>
